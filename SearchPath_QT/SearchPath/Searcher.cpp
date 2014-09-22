@@ -239,6 +239,8 @@ void CSearcher::Heuristic( Map_t &Map, const QPoint &ptSrc, const QPoint &ptDst 
 			//记录当前顶点的前驱顶点
 			m_Parents[pt] = ptCurrent;
 			//记录距离值
+
+			//距离值不正确
 			m_Distances[pt] = m_Distances[ptCurrent]+1;
 			//把当前顶点加放访问路径序列
 			m_Points.push_back(pt);
