@@ -26,3 +26,16 @@
 *.exe
 *.out
 *.app
+SearchPath_QT/SearchPath.opensdf
+SearchPath_QT/SearchPath.sdf
+SearchPath_QT/SearchPath/Resources/Images/.svn/all-wcprops
+SearchPath_QT/SearchPath/Resources/Images/.svn/dir-prop-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/entries
+SearchPath_QT/SearchPath/Resources/Images/.svn/prop-base/barrier.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/prop-base/destination.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/prop-base/start.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/prop-base/thoroughfare.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/text-base/barrier.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/text-base/destination.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/text-base/start.png.svn-base
+SearchPath_QT/SearchPath/Resources/Images/.svn/text-base/thoroughfare.png.svn-base

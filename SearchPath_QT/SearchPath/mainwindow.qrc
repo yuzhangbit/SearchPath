@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/MainWindow">
+        <file>Resources/car1.jpg</file>
+        <file>Resources/car2.jpg</file>
+        <file>Resources/self-driving cute.jpg</file>
+        <file>Resources/Images/barrier.png</file>
+        <file>Resources/Images/destination.png</file>
+        <file>Resources/Images/start.png</file>
+        <file>Resources/Images/thoroughfare.png</file>
+    </qresource>
+</RCC>
