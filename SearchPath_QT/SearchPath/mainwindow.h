@@ -44,11 +44,11 @@ private slots:
 	void on_actionResetDestination_triggered(bool checked);
 	void on_actionAddObs_triggered(bool checked);
 	void on_actionDelObs_triggered(bool checked);
-	void on_actionShowSearchedPathTree_triggered(bool checked);
+	void on_actionSearchOrder_triggered(bool checked);
 	void on_actionNew_triggered();
 	void on_actionClearPath_triggered();
 	void on_actionAbout_triggered();
-	void on_actionShowSearchedPathTreeWithDistances_triggered(bool checked);
+	void on_actionPathLength_triggered(bool checked);
 	void on_actionEnlargement_triggered();
 	void on_actionReduction_triggered();
 	void on_actionZoom100_triggered();

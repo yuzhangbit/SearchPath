@@ -14,7 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	
 	label = new QLabel;
+
 	
+
 
 	setWindowTitle(tr("Search Path"));
 	setWindowIcon(QIcon("myApp.ico"));
@@ -23,7 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
 	
 	m_threadSearch.m_pMainWindow = this ;
 
+	ui.statusBar->setVisible(false);
+
 	ui.statusBar->showMessage(tr("ready"));
+	
 
 
 
@@ -41,7 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
 	QString strAppDirPath = QCoreApplication::applicationDirPath();
 	
 	//加载默认地图
-	QString strDefaultMapPath = strAppDirPath + tr("/DefaultMap.sp");
+	//QString strDefaultMapPath = strAppDirPath + tr("/DefaultMap.sp");
+
+	QString strDefaultMapPath = tr("DefaultMap.sp");
+	
 
 	LoadMap(strDefaultMapPath);
 
@@ -133,11 +141,11 @@ void MainWindow::on_actionDelObs_triggered( bool checked )
 	}
 }
 
-void MainWindow::on_actionShowSearchedPathTree_triggered( bool checked )
+void MainWindow::on_actionSearchOrder_triggered( bool checked )
 {
 	if (checked)
 	{
-		ui.actionDisplayPathLength->setChecked(false);
+		ui.actionPathLength->setChecked(false);
 	}
 	Render();
 }
@@ -151,6 +159,7 @@ void MainWindow::on_actionClearPath_triggered()
 {
 	m_Searcher.ClearResult();
 	Render();
+	//on Render
 }
 
 void MainWindow::on_actionAbout_triggered()
@@ -158,11 +167,11 @@ void MainWindow::on_actionAbout_triggered()
 
 }
 
-void MainWindow::on_actionShowSearchedPathTreeWithDistances_triggered( bool checked )
+void MainWindow::on_actionPathLength_triggered( bool checked )
 {
 	if (checked)
 	{
-		ui.actionDisplaySearchTree->setChecked(false);
+		ui.actionSearchOrder->setChecked(false);
 	}
 	Render();
 }
@@ -188,10 +197,14 @@ void MainWindow::paintEvent( QPaintEvent * )
 	
 	QPainter Painter(this);
 	QRect rectTarget;
-	rectTarget.setRect(0,50,
+	rectTarget.setRect(0,0,
 		m_Pixmap.width() * m_Zoom,
 		m_Pixmap.height() * m_Zoom);
 	Painter.drawPixmap(rectTarget, m_Pixmap);
+	//ui.label->setPixmap(m_Pixmap);
+
+
+	
 
 	
 }
@@ -455,6 +468,53 @@ void MainWindow::Render( const Map_t &Map, const CSearcher &Searcher )
 				pt2->x() * SquareSize + SquareSize / 2,
 				pt2->y() * SquareSize + SquareSize / 2
 				);
+		}
+	}
+
+
+	//  画路径树
+	if( ui.actionSearchOrder->isChecked() == true ||
+		ui.actionPathLength->isChecked() )
+	{
+		unordered_map< Sp_Point_t , size_t > *pNumMap = 0 ;
+		if( ui.actionPathLength->isChecked() )
+		{
+			pNumMap = &Distances ;
+		}
+		else if( ui.actionSearchOrder->isChecked() )
+		{
+			pNumMap = &VisitOrders ;
+		}
+
+		// 画所有经过的路径
+		int nCounter= 0 ;
+		Painter.setPen( Qt::blue );
+		Painter.setBrush( Qt::red );
+
+		for( BOOST_AUTO( it , Parents.begin() ) ; it != Parents.end() ; ++it )
+		{
+			// Painter.drawRect( Path[ i ]->x() * 20 , Path[ i ]->y() * 20 , 20 , 20 );
+
+			std::shared_ptr< QPoint > pt1 = it->first ;
+			std::shared_ptr< QPoint > pt2 = it->second ;
+
+			// QPen Pen( Qt::lightGray , 2 ) ;
+			QPen Pen( QColor( 255 , 255 , 255 , 150 ), 2 ) ;
+			Painter.setPen( Pen );
+			Painter.drawLine( pt1->x() * SquareSize + SquareSize / 2 ,
+				pt1->y() * SquareSize + SquareSize / 2 ,
+				pt2->x() * SquareSize + SquareSize / 2,
+				pt2->y() * SquareSize + SquareSize / 2
+				);
+
+			// 画路径长度 或是 访问顺序
+			Painter.setPen( Qt::yellow );
+			format fmt( "%d") ;
+			fmt.bind_arg( 1 , (*pNumMap)[ pt1 ] ) ;
+			Painter.drawText( pt1->x() * SquareSize + SquareSize / 2 ,
+				pt1->y() * SquareSize + SquareSize - SquareSize / 2 ,
+				fmt.str().c_str() );
+
 		}
 	}
 
